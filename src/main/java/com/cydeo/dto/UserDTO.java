@@ -1,23 +1,21 @@
-package com.cydeo.model;
+package com.cydeo.dto;
 
+import com.cydeo.entity.Role;
 import com.cydeo.utils.Gender;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class User {
+@Data
+public class UserDTO {
     private String firstName;
     private String lastName;
-    private String emailAddress;
-    private int phoneNumber;
+    private String userName;
+    private boolean enable;
+    private String phone;
     private String passWord;
-    private String confirmPassWord;
     private Gender gender;
-    private Role role;
-
+    private RoleDTO roleDTO;
 }

@@ -22,13 +22,12 @@ public class User extends BaseEntity {
     private String userName;
     private boolean enable;
     private String phone;
-//    private String emailAddress;
     private String passWord;
     private Gender gender;
     private Role role;
 
 
-    public User(String firstName, String lastName, String userName, boolean enable, String phone, String passWord, Gender gender, Role role
+    public User(String firstName, String lastName, String userName, boolean enable, String phone,String emailAddress, String passWord, Gender gender, Role role
     , Long id, LocalDateTime insertDateTime,Long insertUserId,LocalDateTime lastUpdateDateTime,Long lastUpdateUserId){
         super(id, insertDateTime, insertUserId, lastUpdateDateTime, lastUpdateUserId);
         this.firstName=firstName;

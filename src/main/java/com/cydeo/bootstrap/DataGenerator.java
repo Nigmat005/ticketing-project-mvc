@@ -2,22 +2,17 @@ package com.cydeo.bootstrap;
 
 import com.cydeo.dto.RoleDTO;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.enums.Gender;
 import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
-import com.cydeo.utils.Gender;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-// should be gotten from database, since we don't have db set up yet we use DataGenerator
 @Component
 public class DataGenerator implements CommandLineRunner {
 
-    RoleService roleService;
-    UserService userService;
+   RoleService roleService;
+   UserService userService;
 
     public DataGenerator(RoleService roleService, UserService userService) {
         this.roleService = roleService;
@@ -26,6 +21,8 @@ public class DataGenerator implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+
         RoleDTO adminRole = new RoleDTO(1L,"Admin");
         RoleDTO managerRole = new RoleDTO(2L,"Manager");
         RoleDTO employeeRole = new RoleDTO(3L,"Employee");
@@ -50,6 +47,7 @@ public class DataGenerator implements CommandLineRunner {
                 "Ada", "maria@cydeo.com", "Abc4", true, "9996987412", employeeRole, Gender.FEMALE);
         UserDTO user8 = new UserDTO("Bill",
                 "Matt", "bill@cydeo.com", "Abc4", true, "8881239846", employeeRole, Gender.MALE);
+
         userService.save(user1);
         userService.save(user2);
         userService.save(user3);
@@ -58,5 +56,6 @@ public class DataGenerator implements CommandLineRunner {
         userService.save(user6);
         userService.save(user7);
         userService.save(user8);
+
     }
 }

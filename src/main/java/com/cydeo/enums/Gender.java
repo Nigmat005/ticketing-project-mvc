@@ -1,4 +1,4 @@
-package com.cydeo.utils;
+package com.cydeo.enums;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 public enum Gender {
-    MALE("male"),FEMALE("female");
+    MALE("Male"),FEMALE("Female");
     private String genderType;
 //    private Gender(String genderType){
 //        this.genderType=genderType;

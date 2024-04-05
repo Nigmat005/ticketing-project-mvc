@@ -10,7 +10,5 @@ public interface CrudService<T,ID> {
     T findById(ID id) throws UserException;
     List<T> findAll();
 
-    void deleteByID(ID id);
-
-
+    void deleteById(ID id);
 }

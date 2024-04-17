@@ -1,13 +1,14 @@
 package com.cydeo.controller;
 
+import com.cydeo.bootstrap.DataGenerator;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,6 +29,7 @@ public class ProjectController {
         model.addAttribute("project",new ProjectDTO());
         model.addAttribute("managers",userService.findAllManager());
         model.addAttribute("projects",projectService.findAll());
+//        model.addAttribute("status", DataGenerator.getStatus());
         return "/project/create";
     }
 
@@ -36,9 +38,39 @@ public class ProjectController {
         // first store projectDTO created by GetMapping
         projectService.save(projectDTO);
 
-        model.addAttribute("project",new ProjectDTO());
-        model.addAttribute("managers",userService.findAllManager());
-        model.addAttribute("projects",projectService.findAll());
-        return "/project/create";
+//        model.addAttribute("project",new ProjectDTO());
+//        model.addAttribute("managers",userService.findAllManager());
+//        model.addAttribute("projects",projectService.findAll());
+//        model.addAttribute("status", DataGenerator.getStatus());
+        return "redirect:/project/create";  // endPoint
+    }
+
+    @GetMapping(value = "/update/{projectCode}")
+    public String editProject(Model model, @PathVariable(value = "projectCode") String primaryKey_ProjectCode){
+     model.addAttribute("projectToBeUpdated",projectService.findById(primaryKey_ProjectCode));
+     model.addAttribute("managers",userService.findAllManager());
+     model.addAttribute("projects",projectService.findAll());
+     model.addAttribute("status", DataGenerator.getStatus());
+     return "/project/update";
+    }
+
+    @PostMapping(value = "/update")
+    public String updateProject(ProjectDTO projectDTO,Model model){
+        // first store updated project
+        projectService.update(projectDTO);
+
+        return "redirect:/project/create";
+    }
+
+    @GetMapping(value = "/delete/{projectCode}")
+    public String deleteProject(@PathVariable(value = "projectCode") String primaryKey_ProjectCode){
+        projectService.deleteById(primaryKey_ProjectCode);
+      return "redirect:/project/create";
+    }
+
+    @GetMapping(value = "/complete/{projectCode}")
+    public String completeProject(@PathVariable(value = "projectCode") String primaryKey_ProjectCode){
+        projectService.complete(projectService.findById(primaryKey_ProjectCode));
+        return "redirect:/project/create";
     }
 }

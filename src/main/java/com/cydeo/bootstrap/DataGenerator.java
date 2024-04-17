@@ -12,10 +12,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class DataGenerator implements CommandLineRunner {
-
+  public static List<Status> statusList;
    RoleService roleService;
    UserService userService;
    ProjectService projectService;
@@ -73,5 +76,9 @@ public class DataGenerator implements CommandLineRunner {
         projectService.save(project2);
         projectService.save(project3);
 
+    }
+
+    public static List<Status> getStatus(){
+        return statusList=Arrays.asList(Status.OPEN,Status.IN_PROGRESS);
     }
 }

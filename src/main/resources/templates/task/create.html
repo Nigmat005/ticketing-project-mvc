@@ -32,14 +32,18 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form action="#">
+                                    <form th:object="${taskObject}" th:action="@{/task/create}" method="post">
 
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Project</label>
-                                                    <select name="project" class="custom-select">
-                                                        <option></option>
+                                                    <select th:field="*{project}" name="project" class="custom-select">
+                                                        <option th:value="''" selected="selected"> Select Project
+                                                        </option>
+                                                        <option th:each="eachProject:${projects}"
+                                                                th:value="${eachProject.getProjectCode()}"
+                                                                th:text="${eachProject.getProjectName()}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -49,8 +53,16 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Assigned Employee</label>
-                                                    <select name="assignedemployee" class="custom-select">
-                                                        <option></option>
+                                                    <select th:field="*{assignedEmployee}" name="assignedemployee"
+                                                            class="custom-select">
+                                                        <option th:value="''" selected="selected"> Select Employee To
+                                                            Assign
+                                                        </option>
+                                                        <option th:each="eachEmployee:${employees}"
+                                                                th:value="${eachEmployee.getUserName()}"
+                                                                th:text="${eachEmployee.getFirstName()+' '+eachEmployee.getLastName()}">
+                                                            Select Employee To Assign
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -60,7 +72,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="tasksubject" class="col-form-label">Task Subject</label>
-                                                    <input id="tasksubject" type="text" class="form-control"
+                                                    <input th:field="*{taskSubject}" id="tasksubject" type="text" class="form-control"
                                                            placeholder="task subject">
                                                 </div>
                                             </div>
@@ -70,7 +82,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="taskdetail">Task Detail</label>
-                                                    <textarea id="taskdetail" class="form-control"
+                                                    <textarea th:field="*{taskDetail}" id="taskdetail" class="form-control"
                                                               placeholder="task detail"></textarea>
                                                 </div>
                                             </div>
@@ -123,15 +135,17 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr th:each="eachTask:${tasks}">
+                                                <td th:text="${eachTask.getProject().getProjectName()}"></td>
+                                                <td th:text="${eachTask.getTaskSubject()}"></td>
+                                                <td th:text="${eachTask.getAssignedEmployee().getFirstName()+' '+eachTask.getAssignedEmployee().getLastName()}"></td>
+                                                <td th:text="${eachTask.getAssignedDate()}"></td>
+                                                <td th:text="${eachTask.status.getStatusType()}"></td>
                                                 <td class="actions">
-                                                    <a href="#" class="btn btn-warning rounded-0">Update</a>
-                                                    <a href="#" class="btn btn-danger rounded-0">Delete</a>
+                                                    <a th:href="@{/task/update/{id}(id=${eachTask.getId()})}"
+                                                       class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:href="@{/task/delete/{id}(id=${eachTask.getId()})}"
+                                                       class="btn btn-danger rounded-0">Delete</a>
                                                 </td>
                                             </tr>
                                             </tbody>

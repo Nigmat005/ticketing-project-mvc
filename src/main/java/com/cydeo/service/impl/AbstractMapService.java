@@ -29,8 +29,8 @@ public abstract class AbstractMapService<T,ID> {
     }
 
     void update(ID id, T object){
-//        map.put(id,object);
-        map.computeIfPresent(id,(key,value)->object);
+        map.put(id,object);
+//        map.computeIfPresent(id,(key,value)->object);
 
     }
 

@@ -2,15 +2,15 @@ package com.cydeo.controller;
 
 import com.cydeo.bootstrap.DataGenerator;
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -72,5 +72,14 @@ public class ProjectController {
     public String completeProject(@PathVariable(value = "projectCode") String primaryKey_ProjectCode){
         projectService.complete(projectService.findById(primaryKey_ProjectCode));
         return "redirect:/project/create";
+    }
+
+    @RequestMapping(value = "/manager/project-status",method = RequestMethod.GET)
+    public String statusUpdate(Model model){
+        UserDTO manager=userService.findById("john@cydeo.com");
+        List<ProjectDTO> projects= projectService.findProjectUnderManger(manager);
+        model.addAttribute("projects",projects);
+
+        return "/manager/project-status";
     }
 }

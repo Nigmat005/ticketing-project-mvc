@@ -7,5 +7,6 @@ import java.util.List;
 public interface UserService extends CrudService<UserDTO,String> {
 
     public abstract List<UserDTO> findAllManager();
+    List<UserDTO> findAllEmployees();
 
 }
